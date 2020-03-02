@@ -1,6 +1,6 @@
 ﻿namespace CommonChatServer
 {
-    partial class Form1
+    partial class ServerForm
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -57,7 +57,6 @@
             this.stopButton.TabIndex = 2;
             this.stopButton.Text = "Arrêter";
             this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // startButton
             // 
@@ -69,7 +68,7 @@
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
-            // Form1
+            // ServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -78,7 +77,7 @@
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.inputTextBox);
             this.Controls.Add(this.consoleListBox);
-            this.Name = "Form1";
+            this.Name = "ServerForm";
             this.Text = "Common Chat Server";
             this.ResumeLayout(false);
             this.PerformLayout();

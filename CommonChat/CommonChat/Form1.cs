@@ -35,7 +35,7 @@ namespace CommonChat
 
             UdpClient udpClient = new UdpClient();
 
-            string ipDestination = "10.228.156.180";
+            string ipDestination = "127.0.0.1";
             int portDestination = 5053;
 
             udpClient.Connect(ipDestination, portDestination);

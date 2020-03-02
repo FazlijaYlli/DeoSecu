@@ -7,13 +7,12 @@ using System.Windows.Forms;
 
 namespace CommonChatServer
 {
-    public partial class Form1 : Form
+    public partial class ServerForm : Form
     {
         private bool loop;
         private Thread thrdListen;
-        private UdpClient client;
 
-        public Form1()
+        public ServerForm()
         {
             InitializeComponent();
         }
@@ -54,13 +53,16 @@ namespace CommonChatServer
                 {
                     IPEndPoint ip = null;
                     byte[] data = server.Receive(ref ip);
+                    string adress = ip.Address.ToString();
+                    string port = ip.Port.ToString();
 
                     //Invocation du la méthode AjouterLog afin que les données soient inscrites dans
                     //la TextBox.
-                    this.Invoke(new Action<string>(AddLog), Encoding.Default.GetString(data));
+                    Invoke(new Action<string>(AddLog), " : " + adress + ":" + port + " [" + Encoding.Default.GetString(data) + "]");
                 }
                 catch
                 {
+
                 }
             }
 
@@ -69,12 +71,7 @@ namespace CommonChatServer
 
         private void AddLog(string data)
         {
-            consoleListBox.Items.Add(DateTime.Now + "\r\n" + "=> " + data);
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-
+            consoleListBox.Items.Add(DateTime.Now + "\r\n" + " => " + data);
         }
     }
 }

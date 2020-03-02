@@ -59,7 +59,7 @@
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(13, 12);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(329, 329);
+            this.listBox.Size = new System.Drawing.Size(337, 329);
             this.listBox.TabIndex = 3;
             // 
             // serverLabel
