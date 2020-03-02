@@ -1,7 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿/*
+ * Lieu        : ETML
+ * Auteur      : Ylli Fazlija & Hugo Ducommun
+ * Date        : 02.03.2020
+ * Description : Chat sécurisé / Classe Program
+ */
+
+using System;
 using System.Windows.Forms;
 
 namespace CommonChat
