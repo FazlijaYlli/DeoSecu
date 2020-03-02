@@ -15,8 +15,6 @@ namespace CommonChat
 {
     public partial class Form1 : Form
     {
-
-
         public Form1()
         {
             InitializeComponent();
@@ -30,10 +28,9 @@ namespace CommonChat
             // Tableau de bytes
             byte[] msg = Encoding.Default.GetBytes(messageToSend);
 
-
             UdpClient udpClient = new UdpClient();
 
-            string ipDestination = "10.228.156.180";
+            string ipDestination = "127.0.0.1";
             int portDestination = 5053;
 
             udpClient.Connect(ipDestination, portDestination);
