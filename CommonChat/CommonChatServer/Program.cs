@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
-namespace CommonChat
+namespace CommonChatServer
 {
     static class Program
     {
@@ -14,6 +18,8 @@ namespace CommonChat
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+
         }
     }
 }
