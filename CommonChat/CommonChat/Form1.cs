@@ -6,10 +6,9 @@
  */
 
 using System;
-using System.Text;
 using System.Net.Sockets;
+using System.Text;
 using System.Windows.Forms;
-using System.Net;
 
 namespace CommonChat
 {
@@ -20,10 +19,16 @@ namespace CommonChat
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Bouton envoyer le message au serveur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void sendBtn_Click(object sender, EventArgs e)
         {
+
             string messageToSend = msgBox.Text;
-            msgBox.Text = String.Empty;
+            msgBox.Text = "";
 
             // Tableau de bytes
             byte[] msg = Encoding.Default.GetBytes(messageToSend);
@@ -39,6 +44,24 @@ namespace CommonChat
             udpClient.Close();
             
             listBox.Items.Add(ipDestination + ":" + portDestination + " > " + messageToSend);
+
+            // resélectionne la textbox pour écrire
+            msgBox.Select();
+        }
+
+        /// <summary>
+        /// Si l'utilisateur appuie sur enter, envoie le message
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void msgBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                // n'écrit pas le retour à la ligne
+                e.SuppressKeyPress = true;
+                sendBtn_Click(sender, e);
+            }
         }
     }
 }
