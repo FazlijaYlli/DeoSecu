@@ -35,7 +35,7 @@
             // 
             // sendBtn
             // 
-            this.sendBtn.Location = new System.Drawing.Point(260, 353);
+            this.sendBtn.Location = new System.Drawing.Point(268, 353);
             this.sendBtn.Name = "sendBtn";
             this.sendBtn.Size = new System.Drawing.Size(82, 47);
             this.sendBtn.TabIndex = 0;
@@ -48,7 +48,7 @@
             this.msgBox.Location = new System.Drawing.Point(13, 353);
             this.msgBox.Multiline = true;
             this.msgBox.Name = "msgBox";
-            this.msgBox.Size = new System.Drawing.Size(241, 47);
+            this.msgBox.Size = new System.Drawing.Size(249, 47);
             this.msgBox.TabIndex = 1;
             // 
             // listBox
@@ -56,14 +56,14 @@
             this.listBox.FormattingEnabled = true;
             this.listBox.Location = new System.Drawing.Point(13, 12);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(329, 329);
+            this.listBox.Size = new System.Drawing.Size(337, 329);
             this.listBox.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 412);
+            this.ClientSize = new System.Drawing.Size(362, 423);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.msgBox);
             this.Controls.Add(this.sendBtn);
