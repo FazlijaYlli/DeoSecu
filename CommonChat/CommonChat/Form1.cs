@@ -14,8 +14,13 @@ namespace CommonChat
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        string _ip;
+        int _port;
+
+        public Form1(string ip, int port)
         {
+            _ip = ip;
+            _port = port;
             InitializeComponent();
         }
 
@@ -35,8 +40,8 @@ namespace CommonChat
 
             UdpClient udpClient = new UdpClient();
 
-            string ipDestination = "127.0.0.1";
-            int portDestination = 5053;
+            string ipDestination = _ip;
+            int portDestination = _port;
 
             udpClient.Connect(ipDestination, portDestination);
             udpClient.Send(msg, msg.Length);
