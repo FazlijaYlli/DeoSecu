@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.hostLabel = new System.Windows.Forms.Label();
-            this.hostText = new System.Windows.Forms.TextBox();
+            this.serverLabel = new System.Windows.Forms.Label();
+            this.serverText = new System.Windows.Forms.TextBox();
             this.portText = new System.Windows.Forms.TextBox();
             this.portLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -39,32 +39,32 @@
             // 
             this.button1.Location = new System.Drawing.Point(74, 143);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(148, 34);
+            this.button1.Size = new System.Drawing.Size(158, 34);
             this.button1.TabIndex = 0;
             this.button1.Text = "Démarrer";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // hostLabel
+            // serverLabel
             // 
-            this.hostLabel.AutoSize = true;
-            this.hostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hostLabel.Location = new System.Drawing.Point(71, 64);
-            this.hostLabel.Name = "hostLabel";
-            this.hostLabel.Size = new System.Drawing.Size(37, 16);
-            this.hostLabel.TabIndex = 1;
-            this.hostLabel.Text = "Hôte";
+            this.serverLabel.AutoSize = true;
+            this.serverLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverLabel.Location = new System.Drawing.Point(71, 64);
+            this.serverLabel.Name = "serverLabel";
+            this.serverLabel.Size = new System.Drawing.Size(55, 16);
+            this.serverLabel.TabIndex = 1;
+            this.serverLabel.Text = "Serveur";
             // 
-            // hostText
+            // serverText
             // 
-            this.hostText.Location = new System.Drawing.Point(122, 63);
-            this.hostText.Name = "hostText";
-            this.hostText.Size = new System.Drawing.Size(100, 20);
-            this.hostText.TabIndex = 3;
+            this.serverText.Location = new System.Drawing.Point(132, 63);
+            this.serverText.Name = "serverText";
+            this.serverText.Size = new System.Drawing.Size(100, 20);
+            this.serverText.TabIndex = 3;
             // 
             // portText
             // 
-            this.portText.Location = new System.Drawing.Point(122, 102);
+            this.portText.Location = new System.Drawing.Point(132, 103);
             this.portText.Name = "portText";
             this.portText.Size = new System.Drawing.Size(100, 20);
             this.portText.TabIndex = 5;
@@ -86,8 +86,8 @@
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.portText);
             this.Controls.Add(this.portLabel);
-            this.Controls.Add(this.hostText);
-            this.Controls.Add(this.hostLabel);
+            this.Controls.Add(this.serverText);
+            this.Controls.Add(this.serverLabel);
             this.Controls.Add(this.button1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -101,8 +101,8 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label hostLabel;
-        private System.Windows.Forms.TextBox hostText;
+        private System.Windows.Forms.Label serverLabel;
+        private System.Windows.Forms.TextBox serverText;
         private System.Windows.Forms.TextBox portText;
         private System.Windows.Forms.Label portLabel;
     }
