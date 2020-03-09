@@ -25,6 +25,7 @@ namespace CommonChat
             {
                 Form1 form1 = new Form1(serverText.Text, Convert.ToInt32(portText.Text));
                 form1.Show();
+                Close();
             }
         }
 
@@ -46,6 +47,7 @@ namespace CommonChat
                 }
                 else
                 {
+                    MessageBox.Show("L'adresse IP rentrée n'est pas atteignable", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
@@ -53,6 +55,39 @@ namespace CommonChat
             {
                 MessageBox.Show("L'adresse IP rentrée est invalide", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Si l'utilisateur appuie sur enter, démarre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void portText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                // n'écrit pas le retour à la ligne
+                e.SuppressKeyPress = true;
+                button1_Click(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Quitte le programme en entier en cas de fermeture de la fenêtre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void welcomePage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void portText_TextChanged(object sender, EventArgs e)
+        {
+            if(portText.Text != "" && serverText.Text != "")
+            {
+                button1.Enabled = true;
             }
         }
     }

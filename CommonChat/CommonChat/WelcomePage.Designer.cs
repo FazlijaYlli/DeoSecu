@@ -37,10 +37,11 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(74, 143);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(158, 34);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 3;
             this.button1.Text = "Démarrer";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -60,14 +61,17 @@
             this.serverText.Location = new System.Drawing.Point(132, 63);
             this.serverText.Name = "serverText";
             this.serverText.Size = new System.Drawing.Size(100, 20);
-            this.serverText.TabIndex = 3;
+            this.serverText.TabIndex = 1;
+            this.serverText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.portText_KeyDown);
             // 
             // portText
             // 
             this.portText.Location = new System.Drawing.Point(132, 103);
             this.portText.Name = "portText";
             this.portText.Size = new System.Drawing.Size(100, 20);
-            this.portText.TabIndex = 5;
+            this.portText.TabIndex = 2;
+            this.portText.TextChanged += new System.EventHandler(this.portText_TextChanged);
+            this.portText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.portText_KeyDown);
             // 
             // portLabel
             // 
@@ -89,10 +93,13 @@
             this.Controls.Add(this.serverText);
             this.Controls.Add(this.serverLabel);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "welcomePage";
-            this.Text = "Choix de l\'hôte";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Choix du serveur";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.welcomePage_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

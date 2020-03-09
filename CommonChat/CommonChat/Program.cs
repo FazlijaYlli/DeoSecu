@@ -20,7 +20,7 @@ namespace CommonChat
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new welcomePage());
+            Application.Run(new Form1("127.0.0.1", 5500));
         }
     }
 }
