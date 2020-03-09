@@ -21,23 +21,15 @@ namespace CommonChat
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(!TestServerAccesibility(hostText.Text))
+            if(TestServerAccesibility(serverText.Text))
             {
-                // not valid
-            }
-            else
-            {
-                if(Convert.ToInt32(portText.Text) > 5000)
-                {
-                    Form1 form1 = new Form1();
-                    form1.Show();
-                    Close();
-                }
+                Form1 form1 = new Form1(serverText.Text, Convert.ToInt32(portText.Text));
+                form1.Show();
             }
         }
 
         /// <summary>
-        /// Le serveur est-il accessible
+        /// Test de l'accessibilité du serveur
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -45,8 +37,9 @@ namespace CommonChat
         {
             try
             {
-                Ping x = new Ping();
-                PingReply reply = x.Send(IPAddress.Parse(IP));
+                Ping ping = new Ping();
+                PingReply reply = ping.Send(IPAddress.Parse(IP));
+
                 if (reply.Status == IPStatus.Success)
                 {
                     return true;
