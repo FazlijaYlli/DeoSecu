@@ -12,6 +12,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Security.Cryptography;
 
 namespace CommonChat
 {
@@ -81,10 +82,14 @@ namespace CommonChat
             }
         }
 
+        /// <summary>
+        /// Test la validité du port
+        /// </summary>
         private bool TestPort(string port)
         {
             int newPort;
-            bool valid = Int32.TryParse(port, out newPort);
+            // est-ce un nombre ?
+            bool valid = int.TryParse(port, out newPort);
 
             if (valid)
             {
@@ -127,6 +132,10 @@ namespace CommonChat
 
                 connectionLabel.ForeColor = Color.Green;
                 connectionLabel.Text = "Online";
+
+                GenerateKeys();
+                listBox.Items.Add("Échange des clés publiques en cours ...");
+                
             }
         }
 
@@ -144,7 +153,7 @@ namespace CommonChat
         }
 
         /// <summary>
-        /// Si l'utilisateur appuie sur enter, démarre
+        /// Si l'utilisateur appuie sur enter, démarre la connexion ou envoie le message
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -158,6 +167,11 @@ namespace CommonChat
             }
         }
 
+        /// <summary>
+        /// Lorsque l'utilisateur veut changer de serveur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changeButton_Click(object sender, EventArgs e)
         {
             connectionLabel.ForeColor = Color.Red;
@@ -175,6 +189,33 @@ namespace CommonChat
             listBox.Items.Clear();
 
             serverText.Focus();
+        }
+
+        /// <summary>
+        /// Crée une clé publique et privée pour la session
+        /// </summary>
+        private RSAParameters[] GenerateKeys()
+        {
+            // Création du provider de clés sur 2048 bits
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048);
+
+            RSAParameters publicKey = rsa.ExportParameters(false);
+            RSAParameters privateKey = rsa.ExportParameters(true);
+
+            // Stocke les clés dans un tableau
+            RSAParameters[] keys = { publicKey, privateKey };
+
+            listBox.Items.Add("Création des clés effectuée !");
+
+            return keys;
+        }
+
+        /// <summary>
+        /// Encrypte le message en RSA
+        /// </summary>
+        private byte[] Encrypt(byte[] input)
+        {
+
         }
     }
 }
