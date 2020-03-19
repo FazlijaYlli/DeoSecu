@@ -16,10 +16,10 @@ using System.Security.Cryptography;
 
 namespace CommonChat
 {
-    public partial class Form1 : Form
+    public partial class ClientForm : Form
     {
 
-        public Form1()
+        public ClientForm()
         {
             InitializeComponent();
         }
@@ -208,14 +208,6 @@ namespace CommonChat
             listBox.Items.Add("Création des clés effectuée !");
 
             return keys;
-        }
-
-        /// <summary>
-        /// Encrypte le message en RSA
-        /// </summary>
-        private byte[] Encrypt(byte[] input)
-        {
-
         }
     }
 }

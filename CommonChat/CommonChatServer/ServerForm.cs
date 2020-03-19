@@ -55,10 +55,11 @@ namespace CommonChatServer
                     byte[] data = server.Receive(ref ip);
                     string adress = ip.Address.ToString();
                     string port = ip.Port.ToString();
+                    string convertedData = BitConverter.ToString(data).Replace("-", "");
 
                     //Invocation du la méthode AjouterLog afin que les données soient inscrites dans
                     //la TextBox.
-                    Invoke(new Action<string>(AddLog), " : " + adress + ":" + port + " [" + Encoding.Default.GetString(data) + "]");
+                    Invoke(new Action<string>(AddLog), " : " + adress + ":" + port + " [" + convertedData + "]");
                 }
                 catch
                 {
