@@ -123,9 +123,9 @@
             // 
             // serverText
             // 
-            this.serverText.Location = new System.Drawing.Point(20, 28);
+            this.serverText.Location = new System.Drawing.Point(14, 28);
             this.serverText.Name = "serverText";
-            this.serverText.Size = new System.Drawing.Size(157, 20);
+            this.serverText.Size = new System.Drawing.Size(163, 20);
             this.serverText.TabIndex = 1;
             this.serverText.TextChanged += new System.EventHandler(this.portText_TextChanged);
             this.serverText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.portText_KeyDown);
