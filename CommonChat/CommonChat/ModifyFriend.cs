@@ -42,7 +42,7 @@ namespace CommonChat
 
                         if (Database.IsModifiedFriendValid(oldName, nameTextBox.Text, ipTextBox.Text))
                         {
-                            DialogResult result = MessageBox.Show("Voulez-vous vraiment appliquer les modifications ?", "Modification d'ami", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            DialogResult result = MessageBox.Show("Voulez-vous vraiment appliquer les modifications ?\n Vos amis devront changer leurs réglages de port.", "Modification d'ami", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                             if (result == DialogResult.Yes)
                             {

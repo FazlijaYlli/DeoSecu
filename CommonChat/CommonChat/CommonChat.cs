@@ -67,7 +67,7 @@ namespace CommonChat
         /// <param name="e"></param>
         private void sendBtn_Click(object sender, EventArgs e)
         {
-            Database.SendMessage(msgBox.Text, false);
+            Database.SendMessage(msgBox.Text, false, false);
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -261,7 +261,7 @@ namespace CommonChat
                         }
                     }
 
-                    string decryptedMsg = Encoding.UTF8.GetString(RSATools.RSADecrypt(data, _localPrivateKey, false)) + " decrypted";
+                    string decryptedMsg = Encoding.UTF8.GetString(RSATools.RSADecrypt(data, _localPrivateKey, false));
 
                     Invoke(new Action<string, string>(AddLog), decryptedMsg, Database.GetNameByIP(ep.Address));
                 }
@@ -331,7 +331,7 @@ namespace CommonChat
                 foreach(TabPage tabPage in tabControl.TabPages)
                 {
                     tabControl.SelectedTab = tabPage;
-                    Database.SendMessage("RESET_KEY", true);
+                    Database.SendMessage("RESET_KEY", true, true);
                     // Reset total des clés de tous les contacts à la fermture.
                     Database.SetKey(tabPage.Text, "WAITING_FOR_KEY");
                 }
@@ -349,7 +349,7 @@ namespace CommonChat
         /// <param name="e"></param>
         private void sendKeyBtn_Click(object sender, EventArgs e)
         {
-            Database.SendMessage(LocalPublicKey, true);
+            Database.SendMessage(LocalPublicKey, true, true);
             MessageBox.Show(new Form() { TopMost = true }, "Votre clé publique a bien été envoyée.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

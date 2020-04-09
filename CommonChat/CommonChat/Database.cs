@@ -113,8 +113,8 @@ namespace CommonChat
                         //Reset notre clé si problème chez notre cher ami
                         SetKey(name, "WAITING_FOR_KEY");
 
-                        //Envoie ma nouvelle clé publique à chaque ami au début de la session
-                        SendMessage(CommonChat.LocalPublicKey, true);
+                        //Envoie ma nouvelle clé publique à tout le monde au début de la session
+                        SendMessage(CommonChat.LocalPublicKey, true, true);
 
                         if (node.ChildNodes[2].InnerText == "WAITING_FOR_KEY")
                         {
@@ -226,7 +226,7 @@ namespace CommonChat
         /// </summary>
         /// <param name="msg">Message à envoyer</param>
         /// <param name="isKeyMsg">Le message est-il l'envoi de notre clé public ou la demande de reset de clé (pour ne pas l'écrire)</param>
-        public static void SendMessage(string msg, bool isKeyMsg)
+        public static void SendMessage(string msg, bool isKeyMsg, bool toEveryone)
         {
             if (CommonChat.TabControlStatic.TabPages.Count != 0)
             {
@@ -255,7 +255,7 @@ namespace CommonChat
                 byte[] data = Encoding.UTF8.GetBytes(msg);
                 byte[] encryptedData;
 
-                if (isKeyMsg)
+                if (toEveryone)
                 {
                     // n'encrypte pas le message si c'est une clé
                     encryptedData = data;
@@ -272,9 +272,13 @@ namespace CommonChat
                     // Envoie à l'ami actif
                     ConnectToFriend(CommonChat.TabControlStatic.SelectedTab.Text);
                     encryptedData = RSATools.RSAEncrypt(data, remotePublicKey, false);
-                    CommonChat.FriendsChat[CommonChat.TabControlStatic.SelectedTab.Text].Items.Add("Moi [" + DateTime.Now + "] > " + msg);
                     CommonChat.Client.Send(encryptedData, encryptedData.Length);
                     CommonChat.Client.Close();
+                }
+
+                if (!isKeyMsg)
+                {
+                    CommonChat.FriendsChat[CommonChat.TabControlStatic.SelectedTab.Text].Items.Add("Moi [" + DateTime.Now + "] > " + msg);
                     CommonChat.MsgBoxStatic.Text = "";
                 }
 
@@ -328,7 +332,7 @@ namespace CommonChat
             CommonChat.FriendsChat[name].Items.Add("En attente de sa clé publique ...");
 
             // Envoie notre clé publique
-            SendMessage(CommonChat.LocalPublicKey, true);
+            SendMessage(CommonChat.LocalPublicKey, true, true);
 
             MessageBox.Show(new Form() { TopMost = true }, name + " a bien été ajouté à votre liste de contacts.", "Succès !", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -411,7 +415,7 @@ namespace CommonChat
         /// <param name="friendName"></param>
         public static void RemoveFriend(string friendName)
         {
-            SendMessage("RESET_KEY", true);
+            SendMessage("RESET_KEY", true, false);
             XmlDocument doc = new XmlDocument();
             doc.Load("users.xml");
             XmlNode nodeRemoved = doc.SelectSingleNode("//friend[@name='" + friendName + "']");
@@ -536,7 +540,7 @@ namespace CommonChat
                         {
                             CommonChat.FriendsChat[name].Items.Clear();
                             CommonChat.FriendsChat[name].Items.Add("Clé publique récupérée, vous pouvez discuter !");
-                            SendMessage(CommonChat.LocalPublicKey, true);
+                            SendMessage(CommonChat.LocalPublicKey, true, true);
                             CommonChat.MsgBoxStatic.Enabled = true;
                         }
                     }
