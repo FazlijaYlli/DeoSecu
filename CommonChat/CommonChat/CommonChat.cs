@@ -13,6 +13,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace CommonChat
 {
@@ -278,6 +280,7 @@ namespace CommonChat
                 FriendsChat[remoteName].Items.Add(remoteName + " [" + DateTime.Now + "] > " + msg);
                 if(WindowState == FormWindowState.Minimized)
                 {
+                    FlashWin.Flash(this);
                     _newMessage.Play();
                 }
             }

@@ -58,6 +58,7 @@
       <DependentUpon>CommonChat.cs</DependentUpon>
     </Compile>
     <Compile Include="Database.cs" />
+    <Compile Include="FlashWin.cs" />
     <Compile Include="RenameFriend.cs">
       <SubType>Form</SubType>
     </Compile>
