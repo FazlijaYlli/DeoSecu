@@ -58,11 +58,12 @@
       <DependentUpon>CommonChat.cs</DependentUpon>
     </Compile>
     <Compile Include="Database.cs" />
-    <Compile Include="ModifyFriend.cs">
+    <Compile Include="FlashWin.cs" />
+    <Compile Include="RenameFriend.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModifyFriend.Designer.cs">
-      <DependentUpon>ModifyFriend.cs</DependentUpon>
+    <Compile Include="RenameFriend.Designer.cs">
+      <DependentUpon>RenameFriend.cs</DependentUpon>
     </Compile>
     <Compile Include="MyInfo.cs">
       <SubType>Form</SubType>
@@ -79,8 +80,8 @@
     <EmbeddedResource Include="CommonChat.resx">
       <DependentUpon>CommonChat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModifyFriend.resx">
-      <DependentUpon>ModifyFriend.cs</DependentUpon>
+    <EmbeddedResource Include="RenameFriend.resx">
+      <DependentUpon>RenameFriend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyInfo.resx">
       <DependentUpon>MyInfo.cs</DependentUpon>
@@ -109,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\commonchat.ico" />
+    <Content Include="Resources\newMessage.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

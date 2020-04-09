@@ -1,6 +1,6 @@
 ﻿namespace CommonChat
 {
-    partial class ModifyFriend
+    partial class RenameFriend
     {
         /// <summary>
         /// Required designer variable.
@@ -43,9 +43,9 @@
             this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelName.Location = new System.Drawing.Point(17, 15);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(37, 16);
+            this.labelName.Size = new System.Drawing.Size(92, 16);
             this.labelName.TabIndex = 29;
-            this.labelName.Text = "Nom";
+            this.labelName.Text = "Nouveau nom";
             // 
             // nameTextBox
             // 
@@ -101,7 +101,7 @@
             this.ipTextBox.TabIndex = 1;
             this.ipTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Enter_KeyDown);
             // 
-            // ModifyFriend
+            // RenameFriend
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -116,7 +116,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ModifyFriend";
+            this.Name = "RenameFriend";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Renommer un contact";
             this.ResumeLayout(false);
