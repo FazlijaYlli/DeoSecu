@@ -254,11 +254,11 @@ namespace CommonChat
 
                 byte[] data = Encoding.UTF8.GetBytes(msg);
                 byte[] encryptedData;
+                // n'encrypte pas le message pour vérifier si c'est une clé
+                encryptedData = data;
 
                 if (toEveryone)
                 {
-                    // n'encrypte pas le message si c'est une clé
-                    encryptedData = data;
                     // envoie à tous les amis
                     foreach (string friendName in GetFriendNames())
                     {
