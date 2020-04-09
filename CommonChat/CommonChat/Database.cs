@@ -6,6 +6,7 @@
  */
 
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -20,7 +21,7 @@ namespace CommonChat
     public static class Database
     {
         /// <summary>
-        /// Cherche le port d'écoute dans la BD sinon retourne 5050
+        /// Cherche le port d'écoute dans la BD sinon retourne 5053
         /// </summary>
         /// <returns>Port d'écoute (int)</returns>
         public static int GetLocalPort()
@@ -35,7 +36,7 @@ namespace CommonChat
                     return Convert.ToInt32(node.InnerText);
                 }
             }
-            return 5050;
+            return 5053;
         }
 
         public static void SetLocalPort(string localPort)
@@ -89,43 +90,71 @@ namespace CommonChat
         public static void GetFriends()
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load("users.xml");
-
-            foreach (XmlNode node in doc.DocumentElement)
+            if (File.Exists("users.xml"))
             {
-                if (node.Name == "friend")
+                doc.Load("users.xml");
+
+                foreach (XmlNode node in doc.DocumentElement)
                 {
-                    string name = node.Attributes[0].InnerText;
-                    // Create a ListView (chat) in a dictionnary which store the listview for each friend
-                    CommonChat.FriendsChat.Add(name, new ListBox());
-                    CommonChat.FriendsChat[name].Width = 606;
-                    CommonChat.FriendsChat[name].Height = 193;
-                    CommonChat.FriendsChat[name].HorizontalScrollbar = true;
-                    // Add a tabpage for each friend of the database
-                    CommonChat.TabControlStatic.TabPages.Add(name);
-                    // Add the ListView in the TabPage created
-                    CommonChat.TabControlStatic.TabPages[CommonChat.TabControlStatic.TabCount - 1].Controls.Add(CommonChat.FriendsChat[name]);
-
-                    //Reset notre clé si problème chez notre cher ami
-                    SetKey(name, "WAITING_FOR_KEY");
-
-                    //Envoie ma nouvelle clé publique à chaque ami au début de la session
-                    SendMessage(CommonChat.LocalPublicKey, true);
-
-                    if (node.ChildNodes[2].InnerText == "WAITING_FOR_KEY")
+                    if (node.Name == "friend")
                     {
-                        CommonChat.FriendsChat[name].Items.Clear();
-                        CommonChat.FriendsChat[name].Items.Add("Votre ami doit vous rajouter dans sa liste de contacts pour vous transmettre sa clé publique.");
-                        CommonChat.FriendsChat[name].Items.Add("");
-                        CommonChat.FriendsChat[name].Items.Add("En attente de sa clé publique ...");
-                        CommonChat.MsgBoxStatic.Enabled = false;
-                    }
-                    else
-                    {
-                        CommonChat.MsgBoxStatic.Enabled = true;
+                        string name = node.Attributes[0].InnerText;
+                        // Create a ListView (chat) in a dictionnary which store the listview for each friend
+                        CommonChat.FriendsChat.Add(name, new ListBox());
+                        CommonChat.FriendsChat[name].Width = 606;
+                        CommonChat.FriendsChat[name].Height = 193;
+                        CommonChat.FriendsChat[name].HorizontalScrollbar = true;
+                        // Add a tabpage for each friend of the database
+                        CommonChat.TabControlStatic.TabPages.Add(name);
+                        // Add the ListView in the TabPage created
+                        CommonChat.TabControlStatic.TabPages[CommonChat.TabControlStatic.TabCount - 1].Controls.Add(CommonChat.FriendsChat[name]);
+
+                        //Reset notre clé si problème chez notre cher ami
+                        SetKey(name, "WAITING_FOR_KEY");
+
+                        //Envoie ma nouvelle clé publique à chaque ami au début de la session
+                        SendMessage(CommonChat.LocalPublicKey, true);
+
+                        if (node.ChildNodes[2].InnerText == "WAITING_FOR_KEY")
+                        {
+                            CommonChat.FriendsChat[name].Items.Clear();
+                            CommonChat.FriendsChat[name].Items.Add("Votre ami doit vous rajouter dans sa liste de contacts pour vous transmettre sa clé publique.");
+                            CommonChat.FriendsChat[name].Items.Add("");
+                            CommonChat.FriendsChat[name].Items.Add("En attente de sa clé publique ...");
+                            CommonChat.MsgBoxStatic.Enabled = false;
+                        }
+                        else
+                        {
+                            CommonChat.MsgBoxStatic.Enabled = true;
+                        }
                     }
                 }
             }
+            else
+            {
+                CreateNewXML();
+            }   
+        }
+
+        /// <summary>
+        /// Crée un nouveau fichier s'il n'existe pas
+        /// </summary>
+        private static void CreateNewXML()
+        {
+            string xmlPath = "users.xml";
+            XmlTextWriter writer = new XmlTextWriter(xmlPath, Encoding.UTF8);
+            writer.WriteStartDocument(true);
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 2;
+
+            writer.WriteStartElement("friends");
+            writer.WriteElementString("myport", "5053");
+            writer.WriteEndElement();
+
+            writer.WriteEndDocument();
+            writer.Close();
+
+            GetFriends();
         }
 
         /// <summary>
@@ -204,7 +233,7 @@ namespace CommonChat
                 doc.Load("users.xml");
 
                 // Valeurs par défaut
-                int remotePort = 5050;
+                int remotePort = 5053;
                 string remotePublicKey = CommonChat.LocalPublicKey;
                 IPAddress remoteIPAddress = IPAddress.Broadcast;
 
