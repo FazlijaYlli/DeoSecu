@@ -482,6 +482,11 @@ namespace CommonChat
             {
                 if (node.Name == "friend" && node.Attributes[0].InnerText == oldName)
                 {
+                    // Change in the dictionary
+                    ListBox listBox = CommonChat.FriendsChat[oldName];
+                    CommonChat.FriendsChat.Remove(oldName);
+                    CommonChat.FriendsChat.Add(newName, listBox);
+                    // Change in the DB
                     node.Attributes[0].InnerText = newName;
                     CommonChat.TabControlStatic.SelectedTab.Text = newName;
                     break;
