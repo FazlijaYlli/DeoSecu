@@ -6,6 +6,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -231,12 +232,9 @@ namespace CommonChat
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load("users.xml");
-
-                // Valeurs par défaut
-                int remotePort = 5053;
+                // Valeurs de base
                 string remotePublicKey = CommonChat.LocalPublicKey;
-                IPAddress remoteIPAddress = IPAddress.Broadcast;
-
+                
                 foreach (XmlNode node in doc.DocumentElement)
                 {
                     if (node.Name == "friend")
@@ -246,8 +244,9 @@ namespace CommonChat
                         {
                             // load his public key to encrypt message
                             remotePublicKey = node.ChildNodes[2].InnerText;
-                            remotePort = Int32.Parse(node.ChildNodes[1].InnerText);
-                            remoteIPAddress = IPAddress.Parse(node.ChildNodes[0].InnerText);
+                            // Valeurs par défaut
+                            int remotePort = Int32.Parse(node.ChildNodes[1].InnerText);
+                            IPAddress remoteIPAddress = IPAddress.Parse(node.ChildNodes[0].InnerText);
                             break;
                         }
                     }
@@ -260,26 +259,26 @@ namespace CommonChat
                 {
                     // n'encrypte pas le message si c'est une clé
                     encryptedData = data;
+                    // envoie à tous les amis
+                    foreach (string friendName in GetFriendNames())
+                    {
+                        ConnectToFriend(friendName);
+                        CommonChat.Client.Send(encryptedData, encryptedData.Length);
+                        CommonChat.Client.Close();
+                    }
                 }
                 else
                 {
+                    // Envoie à l'ami actif
+                    ConnectToFriend(CommonChat.TabControlStatic.SelectedTab.Text);
                     encryptedData = RSATools.RSAEncrypt(data, remotePublicKey, false);
-                }
-
-                // Se connecte à l'ami actif
-                ConnectToFriend(CommonChat.TabControlStatic.SelectedTab.Text);
-
-                if (!isKeyMsg)
-                {
                     CommonChat.FriendsChat[CommonChat.TabControlStatic.SelectedTab.Text].Items.Add("Moi [" + DateTime.Now + "] > " + msg);
+                    CommonChat.Client.Send(encryptedData, encryptedData.Length);
+                    CommonChat.Client.Close();
+                    CommonChat.MsgBoxStatic.Text = "";
                 }
 
-                CommonChat.Client.Send(encryptedData, encryptedData.Length);
-
-                CommonChat.MsgBoxStatic.Text = "";
                 CommonChat.MsgBoxStatic.Select();
-
-                CommonChat.Client.Close();
             }
         }
 
@@ -327,7 +326,6 @@ namespace CommonChat
             CommonChat.FriendsChat[name].Items.Add("Votre ami doit vous rajouter dans sa liste de contacts lorsque vous êtes connecté afin de vous transmettre sa clé publique.");
             CommonChat.FriendsChat[name].Items.Add("");
             CommonChat.FriendsChat[name].Items.Add("En attente de sa clé publique ...");
-
 
             // Envoie notre clé publique
             SendMessage(CommonChat.LocalPublicKey, true);
@@ -489,6 +487,29 @@ namespace CommonChat
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Renvoie tous les noms d'amis ajoutés
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetFriendNames()
+        {
+            List<string> result = new List<string>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load("users.xml");
+
+            foreach (XmlNode node in doc.DocumentElement)
+            {
+                // Séléctionne l'ami actuel
+                if (node.Name == "friend")
+                {
+                    result.Add(node.Attributes[0].InnerText);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
