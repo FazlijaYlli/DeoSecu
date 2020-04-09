@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Media;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -28,6 +29,7 @@ namespace CommonChat
         private static Thread ListeningThread;
 
         private bool _threadLoop;
+        private SoundPlayer _newMessage;
         private string _localPrivateKey;
 
         public CommonChat()
@@ -36,6 +38,7 @@ namespace CommonChat
 
             FriendsChat = new Dictionary<string, ListBox>();
             Client = new UdpClient();
+            _newMessage = new SoundPlayer(@"..\..\Resources\newMessage.wav");
 
             TabControlStatic = tabControl;
             MsgBoxStatic = msgBox;
@@ -151,16 +154,6 @@ namespace CommonChat
         }
 
         /// <summary>
-        /// Active l'envoi de message, car au moins un onglet est actif
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tabControl_ControlAdded(object sender, ControlEventArgs e)
-        {
-            //Restart_Thread();
-        }
-
-        /// <summary>
         /// Fait apparaître une fenêtre d'informations
         /// </summary>
         /// <param name="sender"></param>
@@ -261,7 +254,7 @@ namespace CommonChat
                         }
                     }
 
-                    string decryptedMsg = Encoding.UTF8.GetString(RSATools.RSADecrypt(data, _localPrivateKey, false)) + " decrypted";
+                    string decryptedMsg = Encoding.UTF8.GetString(RSATools.RSADecrypt(data, _localPrivateKey, false));
 
                     Invoke(new Action<string, string>(AddLog), decryptedMsg, Database.GetNameByIP(ep.Address));
                 }
@@ -283,6 +276,10 @@ namespace CommonChat
             if (Database.HasKey(tabControl.SelectedTab.Text))
             {
                 FriendsChat[remoteName].Items.Add(remoteName + " [" + DateTime.Now + "] > " + msg);
+                if(WindowState == FormWindowState.Minimized)
+                {
+                    _newMessage.Play();
+                }
             }
         }
 
@@ -291,7 +288,7 @@ namespace CommonChat
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void modifyFriendBtn_Click(object sender, EventArgs e)
+        private void renameFriendBtn_Click(object sender, EventArgs e)
         {
             if (tabControl.TabPages.Count != 0)
             {
@@ -308,7 +305,7 @@ namespace CommonChat
 
                 if (!isOpen)
                 {
-                    ModifyFriend modifyFriendForm = new ModifyFriend();
+                    RenameFriend modifyFriendForm = new RenameFriend();
                     modifyFriendForm.Show();
                 }
             }

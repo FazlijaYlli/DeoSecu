@@ -37,7 +37,7 @@
             this.addFriendBtn = new System.Windows.Forms.Button();
             this.deleteFriendBtn = new System.Windows.Forms.Button();
             this.infoBtn = new System.Windows.Forms.Button();
-            this.modifyFriendBtn = new System.Windows.Forms.Button();
+            this.renameFriendBtn = new System.Windows.Forms.Button();
             this.sendKeyBtn = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.SuspendLayout();
@@ -74,7 +74,6 @@
             this.tabControl.Size = new System.Drawing.Size(614, 219);
             this.tabControl.TabIndex = 14;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
-            this.tabControl.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.tabControl_ControlAdded);
             // 
             // tabPage1
             // 
@@ -126,15 +125,15 @@
             this.infoBtn.UseVisualStyleBackColor = true;
             this.infoBtn.Click += new System.EventHandler(this.infoBtn_Click);
             // 
-            // modifyFriendBtn
+            // renameFriendBtn
             // 
-            this.modifyFriendBtn.Location = new System.Drawing.Point(220, 13);
-            this.modifyFriendBtn.Name = "modifyFriendBtn";
-            this.modifyFriendBtn.Size = new System.Drawing.Size(200, 34);
-            this.modifyFriendBtn.TabIndex = 18;
-            this.modifyFriendBtn.Text = "Renommer le contact";
-            this.modifyFriendBtn.UseVisualStyleBackColor = true;
-            this.modifyFriendBtn.Click += new System.EventHandler(this.modifyFriendBtn_Click);
+            this.renameFriendBtn.Location = new System.Drawing.Point(220, 13);
+            this.renameFriendBtn.Name = "renameFriendBtn";
+            this.renameFriendBtn.Size = new System.Drawing.Size(200, 34);
+            this.renameFriendBtn.TabIndex = 18;
+            this.renameFriendBtn.Text = "Renommer le contact";
+            this.renameFriendBtn.UseVisualStyleBackColor = true;
+            this.renameFriendBtn.Click += new System.EventHandler(this.renameFriendBtn_Click);
             // 
             // sendKeyBtn
             // 
@@ -152,7 +151,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(635, 403);
             this.Controls.Add(this.sendKeyBtn);
-            this.Controls.Add(this.modifyFriendBtn);
+            this.Controls.Add(this.renameFriendBtn);
             this.Controls.Add(this.infoBtn);
             this.Controls.Add(this.deleteFriendBtn);
             this.Controls.Add(this.addFriendBtn);
@@ -182,7 +181,7 @@
         private System.Windows.Forms.Button deleteFriendBtn;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button infoBtn;
-        private System.Windows.Forms.Button modifyFriendBtn;
+        private System.Windows.Forms.Button renameFriendBtn;
         private System.Windows.Forms.Button sendKeyBtn;
     }
 }

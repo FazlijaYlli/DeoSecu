@@ -248,6 +248,7 @@ namespace CommonChat
         /// </summary>
         /// <param name="msg">Message à envoyer</param>
         /// <param name="isKeyMsg">Le message est-il l'envoi de notre clé public ou la demande de reset de clé (pour ne pas l'écrire)</param>
+        /// <param name="toEveryone">Le message s'envoie-il à tous les contacts</param>
         public static void SendMessage(string msg, bool isKeyMsg, bool toEveryone)
         {
             if (CommonChat.TabControlStatic.TabPages.Count != 0)
@@ -472,7 +473,7 @@ namespace CommonChat
         /// <param name="newName">New name</param>
         /// <param name="newIP">New IP</param>
         /// <param name="newPort">New port</param>
-        public static void ModifyFriend(string oldName, string newName, string newIP, string newPort)
+        public static void RenameFriend(string oldName, string newName)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load("users.xml");
@@ -482,20 +483,6 @@ namespace CommonChat
                 if (node.Name == "friend" && node.Attributes[0].InnerText == oldName)
                 {
                     node.Attributes[0].InnerText = newName;
-
-                    // Si on change d'IP, reset la clé public
-                    if (node.ChildNodes[0].InnerText != newIP)
-                    {
-                        CommonChat.FriendsChat[oldName].Items.Clear();
-                        CommonChat.FriendsChat[oldName].Items.Add("Votre ami doit vous rajouter dans sa liste de contacts lorsque vous êtes connecté afin de vous transmettre sa clé publique.");
-                        CommonChat.FriendsChat[oldName].Items.Add("");
-                        CommonChat.FriendsChat[oldName].Items.Add("En attente de sa clé publique ...");
-                        CommonChat.MsgBoxStatic.Enabled = false;
-                        node.ChildNodes[2].InnerText = "WAITING_FOR_KEY";
-                    }
-
-                    node.ChildNodes[0].InnerText = newIP;
-                    node.ChildNodes[1].InnerText = newPort;
                     CommonChat.TabControlStatic.SelectedTab.Text = newName;
                     break;
                 }
