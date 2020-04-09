@@ -7,11 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Media;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace CommonChat
 {
@@ -28,6 +31,7 @@ namespace CommonChat
         private static Thread ListeningThread;
 
         private bool _threadLoop;
+        private SoundPlayer _newMessage;
         private string _localPrivateKey;
 
         public CommonChat()
@@ -36,6 +40,7 @@ namespace CommonChat
 
             FriendsChat = new Dictionary<string, ListBox>();
             Client = new UdpClient();
+            _newMessage = new SoundPlayer(@"..\..\Resources\newMessage.wav");
 
             TabControlStatic = tabControl;
             MsgBoxStatic = msgBox;
@@ -148,16 +153,6 @@ namespace CommonChat
             {
                 MessageBox.Show(new Form() { TopMost = true }, "Vous n'avez pas d'onglet de contact ouvert.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        /// <summary>
-        /// Active l'envoi de message, car au moins un onglet est actif
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tabControl_ControlAdded(object sender, ControlEventArgs e)
-        {
-            //Restart_Thread();
         }
 
         /// <summary>
@@ -283,6 +278,11 @@ namespace CommonChat
             if (Database.HasKey(tabControl.SelectedTab.Text))
             {
                 FriendsChat[remoteName].Items.Add(remoteName + " [" + DateTime.Now + "] > " + msg);
+                if(WindowState == FormWindowState.Minimized)
+                {
+                    FlashWin.Flash(this);
+                    _newMessage.Play();
+                }
             }
         }
 
@@ -291,7 +291,7 @@ namespace CommonChat
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void modifyFriendBtn_Click(object sender, EventArgs e)
+        private void renameFriendBtn_Click(object sender, EventArgs e)
         {
             if (tabControl.TabPages.Count != 0)
             {
@@ -308,7 +308,7 @@ namespace CommonChat
 
                 if (!isOpen)
                 {
-                    ModifyFriend modifyFriendForm = new ModifyFriend();
+                    RenameFriend modifyFriendForm = new RenameFriend();
                     modifyFriendForm.Show();
                 }
             }
@@ -349,7 +349,7 @@ namespace CommonChat
         /// <param name="e"></param>
         private void sendKeyBtn_Click(object sender, EventArgs e)
         {
-            Database.SendMessage(LocalPublicKey, true, true);
+            Database.SendMessage(LocalPublicKey, true, false);
             MessageBox.Show(new Form() { TopMost = true }, "Votre clé publique a bien été envoyée.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

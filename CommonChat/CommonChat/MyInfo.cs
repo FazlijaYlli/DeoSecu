@@ -59,6 +59,8 @@ namespace CommonChat
 
                     if (result == DialogResult.Yes)
                     {
+                        // Reset de ma clé chez tout le monde => communication désormais impossible sur ce port.
+                        Database.SendMessage("RESET_KEY", true, true);
                         Database.SetLocalPort(newPort.ToString());
                         labelMyPort.Text = newPort.ToString();
                         Application.Restart();
