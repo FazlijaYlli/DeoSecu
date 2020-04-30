@@ -9,6 +9,7 @@ using System;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CommonChat
 {
@@ -27,6 +28,7 @@ namespace CommonChat
         /// <returns></returns>
         public void GetLocalIPAddress()
         {
+            int y = 40;
             foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (netInterface.OperationalStatus == OperationalStatus.Up)
@@ -37,10 +39,30 @@ namespace CommonChat
                         {
                             var row = new string[] { netInterface.Name, ip.Address.ToString() };
                             listViewIP.Items.Add(new ListViewItem(row));
+                            //Créations des boutons pour copier dans le presse-papier
+                            groupBox1.Controls.Add(new Button
+                            {
+                                Location = new Point(385, y),
+                                Size = new Size(60, 20),
+                                Text = "Copier",
+                                Font = new Font(Font.FontFamily, 8),
+                            });
+                            //Controls[Controls.Count - 1].BringToFront();
+                            groupBox1.Controls[groupBox1.Controls.Count - 1].Click += new EventHandler(CopyButton);
+                            y += 19;
                         }
                     }
                 }
             }
+        }
+
+        private void CopyButton(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            int index = (btn.Location.Y - 40) / 19;
+            string data = listViewIP.Items[index].SubItems[1].Text;
+            Clipboard.SetData(DataFormats.Text, data);
+            MessageBox.Show(new Form() { TopMost = true }, "L'adresse IP a bien été copiée dans le presse-papier.", "Succès !", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
