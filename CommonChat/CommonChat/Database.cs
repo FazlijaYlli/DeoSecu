@@ -580,7 +580,7 @@ namespace CommonChat
                         {
                             CommonChat.FriendsChat[name].Items.Clear();
                             CommonChat.FriendsChat[name].Items.Add("Clé publique récupérée, vous pouvez discuter !");
-                            SendMessage(CommonChat.LocalPublicKey, true, false);
+                            SendMessage(CommonChat.LocalPublicKey, true, true);
                             CommonChat.MsgBoxStatic.Enabled = true;
                         }
                     }
