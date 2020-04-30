@@ -45,17 +45,19 @@
             this.groupBox1.Controls.Add(this.listViewIP);
             this.groupBox1.Location = new System.Drawing.Point(15, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 216);
+            this.groupBox1.Size = new System.Drawing.Size(452, 216);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Vos IP";
             // 
             // listViewIP
             // 
+            this.listViewIP.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listViewIP.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
             this.listViewIP.HideSelection = false;
+            this.listViewIP.HoverSelection = true;
             this.listViewIP.Location = new System.Drawing.Point(10, 19);
             this.listViewIP.Name = "listViewIP";
             this.listViewIP.Size = new System.Drawing.Size(364, 190);
@@ -80,16 +82,16 @@
             this.groupBox2.Controls.Add(this.labelMyPort);
             this.groupBox2.Location = new System.Drawing.Point(15, 234);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(381, 55);
+            this.groupBox2.Size = new System.Drawing.Size(452, 55);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Port d\'écoute de la session";
             // 
             // newPortTextBox
             // 
-            this.newPortTextBox.Location = new System.Drawing.Point(172, 22);
+            this.newPortTextBox.Location = new System.Drawing.Point(187, 22);
             this.newPortTextBox.Name = "newPortTextBox";
-            this.newPortTextBox.Size = new System.Drawing.Size(100, 20);
+            this.newPortTextBox.Size = new System.Drawing.Size(151, 20);
             this.newPortTextBox.TabIndex = 28;
             this.newPortTextBox.TextChanged += new System.EventHandler(this.newPortTextBox_TextChanged);
             this.newPortTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Enter_KeyDown);
@@ -97,7 +99,7 @@
             // modifyBtn
             // 
             this.modifyBtn.Enabled = false;
-            this.modifyBtn.Location = new System.Drawing.Point(278, 20);
+            this.modifyBtn.Location = new System.Drawing.Point(344, 20);
             this.modifyBtn.Name = "modifyBtn";
             this.modifyBtn.Size = new System.Drawing.Size(96, 23);
             this.modifyBtn.TabIndex = 27;
@@ -120,7 +122,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(408, 301);
+            this.ClientSize = new System.Drawing.Size(479, 301);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
