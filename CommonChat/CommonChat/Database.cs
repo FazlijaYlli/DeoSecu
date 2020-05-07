@@ -534,29 +534,6 @@ namespace CommonChat
         }
 
         /// <summary>
-        /// Renvoie tous les noms d'amis ajoutés
-        /// </summary>
-        /// <returns></returns>
-        public static List<string> GetFriendNames()
-        {
-            List<string> result = new List<string>();
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load("users.xml");
-
-            foreach (XmlNode node in doc.DocumentElement)
-            {
-                // Séléctionne l'ami actuel
-                if (node.Name == "friend")
-                {
-                    result.Add(node.Attributes[0].InnerText);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Remplace une clé publique d'un contact
         /// </summary>
         /// <param name="friendName">Nom de l'ami concerné</param>

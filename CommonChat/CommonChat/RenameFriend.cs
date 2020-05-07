@@ -35,15 +35,9 @@ namespace CommonChat
                 {
                     string oldName = CommonChat.TabControlStatic.SelectedTab.Text;
 
-<<<<<<< HEAD:CommonChat/CommonChat/ModifyFriend.cs
-                        if (Database.IsModifiedFriendValid(oldName, nameTextBox.Text, ipTextBox.Text))
-                        {
-                            DialogResult result = MessageBox.Show("Voulez-vous vraiment appliquer les modifications ?\n Vos amis devront changer leurs réglages de port.", "Modification d'ami", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-=======
                     if (Database.IsModifiedFriendValid(oldName, nameTextBox.Text, ipTextBox.Text))
                     {
                         DialogResult result = MessageBox.Show("Voulez-vous vraiment appliquer les modifications ?", "Modification d'ami", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
->>>>>>> master:CommonChat/CommonChat/RenameFriend.cs
 
                         if (result == DialogResult.Yes)
                         {
