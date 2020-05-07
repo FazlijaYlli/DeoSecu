@@ -230,35 +230,40 @@ namespace CommonChat
             {
                 try
                 {
-                    IPEndPoint ep = new IPEndPoint(IPAddress.Any, LocalPort);
-                    byte[] data = server.Receive(ref ep);
-                    string uncryptedMsg = Encoding.UTF8.GetString(data);
-
-                    // Si le message en dur (avant décryptage) et qu'il provient du bon EndPoint.
-                    if (uncryptedMsg == "RESET_KEY")
+                    // verifie pour chaque adresse enregistrée le trafic entrant
+                    foreach (string ip in Database.GetFriendsIP())
                     {
-                        Invoke(new Action<string, string>(Database.SetKey), Database.GetNameByIP(ep.Address), "WAITING_FOR_KEY");
-                    }
+                        IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), LocalPort);
+                        byte[] data = server.Receive(ref ep);
 
-                    const string beginning = "<RSAKeyValue><Modulus>";
-                    const string middle = "</Modulus><Exponent>";
-                    const string ending = "</Exponent></RSAKeyValue>";
+                        string uncryptedMsg = Encoding.UTF8.GetString(data);
 
-                    // Vérifie que c'est une clé publique valide
-                    if (data.Length == 415)
-                    {
-                        if (uncryptedMsg.Substring(0, beginning.Length) == beginning && uncryptedMsg.Substring(uncryptedMsg.Length - ending.Length - 4 - middle.Length, middle.Length) == middle && uncryptedMsg.Substring(uncryptedMsg.Length - ending.Length, ending.Length) == ending)
+                        // Si le message en dur (avant décryptage) et qu'il provient du bon EndPoint.
+                        if (uncryptedMsg == "RESET_KEY")
                         {
-                            // Remplace la clé de l'ami actuel
-                            Invoke(new Action<string, string>(Database.SetKey), Database.GetNameByIP(ep.Address), uncryptedMsg);
-                            msgBox.Enabled = true;
-                            continue;
+                            Invoke(new Action<string, string>(Database.SetKey), Database.GetNameByIP(ep.Address), "WAITING_FOR_KEY");
                         }
+                        
+                        const string BEGINNING = "<RSAKeyValue><Modulus>";
+                        const string MIDDLE = "</Modulus><Exponent>";
+                        const string ENDING = "</Exponent></RSAKeyValue>";
+
+                        // Vérifie que c'est une clé publique valide
+                        if (data.Length == 415)
+                        {
+                            if (uncryptedMsg.Substring(0, BEGINNING.Length) == BEGINNING && uncryptedMsg.Substring(uncryptedMsg.Length - ENDING.Length - 4 - MIDDLE.Length, MIDDLE.Length) == MIDDLE && uncryptedMsg.Substring(uncryptedMsg.Length - ENDING.Length, ENDING.Length) == ENDING)
+                            {
+                                // Remplace la clé de l'ami actuel
+                                Invoke(new Action<string, string>(Database.SetKey), Database.GetNameByIP(ep.Address), uncryptedMsg);
+                                msgBox.Enabled = true;
+                                continue;
+                            }
+                        }
+
+                        string decryptedMsg = Encoding.UTF8.GetString(RSATools.RSADecrypt(data, _localPrivateKey, false));
+
+                        Invoke(new Action<string, string>(AddLog), decryptedMsg, Database.GetNameByIP(ep.Address));
                     }
-
-                    string decryptedMsg = Encoding.UTF8.GetString(RSATools.RSADecrypt(data, _localPrivateKey, false));
-
-                    Invoke(new Action<string, string>(AddLog), decryptedMsg, Database.GetNameByIP(ep.Address));
                 }
                 catch
                 {

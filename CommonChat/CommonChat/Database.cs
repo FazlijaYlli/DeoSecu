@@ -86,6 +86,26 @@ namespace CommonChat
         }
 
         /// <summary>
+        /// Renvoie toute les IP de nos amis
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetFriendsIP()
+        {
+            List<string> result = new List<string>();
+            XmlDocument doc = new XmlDocument();
+            doc.Load("users.xml");
+
+            foreach (XmlNode node in doc.DocumentElement)
+            {
+                if (node.Name == "friend" && node.Attributes[0].InnerText == CommonChat.TabControlStatic.SelectedTab.Text)
+                {
+                    result.Add(node.ChildNodes[0].InnerText);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Charge tous les amis de la DB sur le TabControl
         /// </summary>
         public static void GetFriends()
