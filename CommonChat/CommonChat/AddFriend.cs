@@ -17,8 +17,8 @@ namespace CommonChat
         public AddFriend()
         {
             InitializeComponent();
-            // Port par défaut : 5050
-            portTextBox.Text = Convert.ToString(5050);
+            // Port par défaut : 5053
+            portTextBox.Text = Convert.ToString(5053);
         }
 
         /// <summary>
